@@ -27,14 +27,10 @@ class WakeyViewModel(
     private val _alarmListUiState = MutableStateFlow(AlarmListUiState())
     val alarmListUiState: StateFlow<AlarmListUiState> = _alarmListUiState.asStateFlow()
 
-    init {
-        getAlarmListData()
-    }
-
     fun getAlarmListData() {
         viewModelScope.launch {
             val alarms = wakeyRepository.getAllAlarms().first()
-            val map = buildMap<Int, Pattern> {
+            val map = buildMap {
                 alarms.forEach { alarm ->
                     val pattern = wakeyRepository.getPatternById(alarm.patternId).first()
                     put(alarm.patternId, pattern)

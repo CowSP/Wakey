@@ -34,6 +34,7 @@ fun AlarmListScreen(
     modifier: Modifier = Modifier,
     wakeyViewModel: WakeyViewModel = viewModel(factory = WakeyViewModel.Factory)
 ) {
+    wakeyViewModel.getAlarmListData()
     val uiState = wakeyViewModel.alarmListUiState.collectAsState().value
 
     LazyColumn(
