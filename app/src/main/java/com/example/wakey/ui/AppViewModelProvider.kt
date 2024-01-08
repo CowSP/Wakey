@@ -6,11 +6,16 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.wakey.WakeyApplication
 import com.example.wakey.ui.alarm.AlarmListViewModel
+import com.example.wakey.ui.pattern.PatternListViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             AlarmListViewModel(this.wakeyApplication().container.wakeyRepository)
+        }
+
+        initializer {
+            PatternListViewModel(this.wakeyApplication().container.wakeyRepository)
         }
     }
 }
