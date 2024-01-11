@@ -21,61 +21,61 @@ import com.example.wakey.ui.pattern.PatternListScreen
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    appViewModel: AppViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val uiState = appViewModel.appUiState.collectAsState().value
+    val uiState = homeViewModel.homeUiState.collectAsState().value
 
     val navItems = listOf(
-        NavigationItem(
-            appSection = AppSection.Alarms,
+        HomeNavigationItem(
+            homeSection = HomeSection.Alarms,
             icon = Icons.Default.Alarm,
             description = "Alarms"
         ),
-        NavigationItem(
-            appSection = AppSection.Patterns,
+        HomeNavigationItem(
+            homeSection = HomeSection.Patterns,
             icon = Icons.Default.ViewTimeline,
             description = "Patterns"
         )
     )
 
     Column(modifier = modifier) {
-        AppContent(appSection = uiState.currentSection, modifier = Modifier.weight(1f))
-        WakeyNavigationBar(
+        HomeContent(homeSection = uiState.currentSection, modifier = Modifier.weight(1f))
+        HomeNavigationBar(
             currentSection = uiState.currentSection,
-            navigationItems = navItems,
-            onSectionPressed = appViewModel::changeSection
+            homeNavigationItems = navItems,
+            onSectionPressed = homeViewModel::changeSection
         )
     }
 
 }
 
 @Composable
-fun AppContent(
-    appSection: AppSection,
+fun HomeContent(
+    homeSection: HomeSection,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
-        when (appSection) {
-            AppSection.Alarms -> AlarmListScreen()
-            AppSection.Patterns -> PatternListScreen()
+        when (homeSection) {
+            HomeSection.Alarms -> AlarmListScreen()
+            HomeSection.Patterns -> PatternListScreen()
         }
     }
 }
 
 @Composable
-private fun WakeyNavigationBar(
-    currentSection: AppSection,
-    navigationItems: List<NavigationItem>,
-    onSectionPressed: (AppSection) -> Unit,
+private fun HomeNavigationBar(
+    currentSection: HomeSection,
+    homeNavigationItems: List<HomeNavigationItem>,
+    onSectionPressed: (HomeSection) -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavigationBar(
         modifier = modifier
     ) {
-        navigationItems.forEach { navItem ->
+        homeNavigationItems.forEach { navItem ->
             NavigationBarItem(
-                selected = currentSection == navItem.appSection,
-                onClick = { onSectionPressed(navItem.appSection) },
+                selected = currentSection == navItem.homeSection,
+                onClick = { onSectionPressed(navItem.homeSection) },
                 icon = {
                     Icon(
                         imageVector = navItem.icon,
@@ -91,8 +91,8 @@ private fun WakeyNavigationBar(
 }
 
 
-private data class NavigationItem(
-    val appSection: AppSection,
+private data class HomeNavigationItem(
+    val homeSection: HomeSection,
     val icon: ImageVector,
     val description: String
 )
