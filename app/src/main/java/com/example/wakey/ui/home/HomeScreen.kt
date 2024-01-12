@@ -16,10 +16,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wakey.ui.AppViewModelProvider
 import com.example.wakey.ui.alarm.AlarmListScreen
+import com.example.wakey.ui.navigation.NavigationDestination
 import com.example.wakey.ui.pattern.PatternListScreen
+
+object HomeScreenDestination : NavigationDestination {
+    override val route = "home"
+}
 
 @Composable
 fun HomeScreen(
+    onAlarmSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -39,7 +45,11 @@ fun HomeScreen(
     )
 
     Column(modifier = modifier) {
-        HomeContent(homeSection = uiState.currentSection, modifier = Modifier.weight(1f))
+        HomeContent(
+            homeSection = uiState.currentSection,
+            onAlarmSelected = onAlarmSelected,
+            modifier = Modifier.weight(1f)
+        )
         HomeNavigationBar(
             currentSection = uiState.currentSection,
             homeNavigationItems = navItems,
@@ -52,11 +62,12 @@ fun HomeScreen(
 @Composable
 fun HomeContent(
     homeSection: HomeSection,
+    onAlarmSelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
         when (homeSection) {
-            HomeSection.Alarms -> AlarmListScreen()
+            HomeSection.Alarms -> AlarmListScreen(onAlarmSelected = onAlarmSelected)
             HomeSection.Patterns -> PatternListScreen()
         }
     }

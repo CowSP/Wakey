@@ -1,10 +1,12 @@
 package com.example.wakey.ui
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.wakey.WakeyApplication
+import com.example.wakey.ui.alarm.AlarmDetailViewModel
 import com.example.wakey.ui.alarm.AlarmListViewModel
 import com.example.wakey.ui.home.HomeViewModel
 import com.example.wakey.ui.pattern.PatternListViewModel
@@ -17,6 +19,13 @@ object AppViewModelProvider {
 
         initializer {
             AlarmListViewModel(this.wakeyApplication().container.wakeyRepository)
+        }
+
+        initializer {
+            AlarmDetailViewModel(
+                this.createSavedStateHandle(),
+                this.wakeyApplication().container.wakeyRepository
+            )
         }
 
         initializer {

@@ -1,6 +1,7 @@
 package com.example.wakey.ui.alarm
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +33,7 @@ import com.example.wakey.ui.AppViewModelProvider
 
 @Composable
 fun AlarmListScreen(
+    onAlarmSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
     alarmListViewModel: AlarmListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -45,7 +47,8 @@ fun AlarmListScreen(
         items(uiState.alarms) { alarm ->
             AlarmCard(
                 alarm = alarm,
-                patternName = uiState.patternsById[alarm.patternId]!!.name
+                patternName = uiState.patternsById[alarm.patternId]!!.name,
+                modifier = Modifier.clickable { onAlarmSelected(alarm.alarmId) }
             )
         }
     }
