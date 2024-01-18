@@ -31,7 +31,7 @@ fun WakeyNavHost(
                 type = NavType.IntType
             })
         ) {
-            AlarmDetailScreen()
+            AlarmDetailScreen(navigateUp = { navController.navigateUp() })
         }
     }
 }
