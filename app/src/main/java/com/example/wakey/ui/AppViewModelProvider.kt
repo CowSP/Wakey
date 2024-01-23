@@ -9,6 +9,7 @@ import com.example.wakey.WakeyApplication
 import com.example.wakey.ui.alarm.AlarmDetailViewModel
 import com.example.wakey.ui.alarm.AlarmListViewModel
 import com.example.wakey.ui.home.HomeViewModel
+import com.example.wakey.ui.pattern.PatternDetailViewModel
 import com.example.wakey.ui.pattern.PatternListViewModel
 
 object AppViewModelProvider {
@@ -30,6 +31,13 @@ object AppViewModelProvider {
 
         initializer {
             PatternListViewModel(this.wakeyApplication().container.wakeyRepository)
+        }
+
+        initializer {
+            PatternDetailViewModel(
+                this.createSavedStateHandle(),
+                this.wakeyApplication().container.wakeyRepository
+            )
         }
     }
 }

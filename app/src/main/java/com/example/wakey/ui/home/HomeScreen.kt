@@ -26,6 +26,7 @@ object HomeScreenDestination : NavigationDestination {
 @Composable
 fun HomeScreen(
     onAlarmSelected: (Int) -> Unit,
+    onPatternSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -48,6 +49,7 @@ fun HomeScreen(
         HomeContent(
             homeSection = uiState.currentSection,
             onAlarmSelected = onAlarmSelected,
+            onPatternSelected = onPatternSelected,
             modifier = Modifier.weight(1f)
         )
         HomeNavigationBar(
@@ -63,12 +65,13 @@ fun HomeScreen(
 fun HomeContent(
     homeSection: HomeSection,
     onAlarmSelected: (Int) -> Unit,
+    onPatternSelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier) {
         when (homeSection) {
             HomeSection.Alarms -> AlarmListScreen(onAlarmSelected = onAlarmSelected)
-            HomeSection.Patterns -> PatternListScreen()
+            HomeSection.Patterns -> PatternListScreen(onPatternSelected = onPatternSelected)
         }
     }
 }

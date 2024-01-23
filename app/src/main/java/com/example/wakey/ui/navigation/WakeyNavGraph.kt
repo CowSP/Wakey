@@ -11,6 +11,8 @@ import com.example.wakey.ui.alarm.AlarmDetailScreen
 import com.example.wakey.ui.alarm.AlarmDetailScreenDestination
 import com.example.wakey.ui.home.HomeScreen
 import com.example.wakey.ui.home.HomeScreenDestination
+import com.example.wakey.ui.pattern.PatternDetailScreen
+import com.example.wakey.ui.pattern.PatternDetailScreenDestination
 
 @Composable
 fun WakeyNavHost(
@@ -22,7 +24,9 @@ fun WakeyNavHost(
         modifier = modifier
     ) {
         composable(route = HomeScreenDestination.route) {
-            HomeScreen(onAlarmSelected = { navController.navigate("${AlarmDetailScreenDestination.route}/$it") })
+            HomeScreen(
+                onAlarmSelected = { navController.navigate("${AlarmDetailScreenDestination.route}/$it") },
+                onPatternSelected = { navController.navigate("${PatternDetailScreenDestination.route}/$it") })
         }
 
         composable(
@@ -32,6 +36,15 @@ fun WakeyNavHost(
             })
         ) {
             AlarmDetailScreen(navigateUp = { navController.navigateUp() })
+        }
+        
+        composable(
+            route = PatternDetailScreenDestination.routeWithArgs,
+            arguments = listOf(navArgument(PatternDetailScreenDestination.patternIdArg) {
+                type = NavType.IntType
+            })
+        ) {
+            PatternDetailScreen(navigateUp = { navController.navigateUp() })
         }
     }
 }

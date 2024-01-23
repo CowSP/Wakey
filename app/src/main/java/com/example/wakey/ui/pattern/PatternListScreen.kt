@@ -1,6 +1,7 @@
 package com.example.wakey.ui.pattern
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,6 +38,7 @@ import com.example.wakey.ui.AppViewModelProvider
 
 @Composable
 fun PatternListScreen(
+    onPatternSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
     patternListViewModel: PatternListViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
@@ -47,7 +49,7 @@ fun PatternListScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp), modifier = modifier
     ) {
         items(uiState.patterns) { pattern ->
-            PatternCard(pattern = pattern, uiState = uiState)
+            PatternCard(pattern = pattern, uiState = uiState, modifier = Modifier.clickable { onPatternSelected(pattern.patternId) })
         }
     }
 }
